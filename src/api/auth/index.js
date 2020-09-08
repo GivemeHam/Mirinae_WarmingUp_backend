@@ -6,3 +6,5 @@ const authCtrl = require('./auth.controller');
 auth.post('/register/local', authCtrl.localRegister);
 //로그인
 auth.post('login/local', authCtrl.localLogin);
+
+module.exports = auth;

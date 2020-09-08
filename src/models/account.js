@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const { string } = require('joi');
 const { Schema } = mongoose;
-const crypto = requrie('crypto');
-const { generateToken } = require('lib/token');
+const crypto = require('crypto');
+//const { generateToken } = require('lib/token');
 const { throws } = require('assert');
 
 function hash(password) {
@@ -26,12 +26,13 @@ const Account = new Schema({
         }
     },
     password: String,
-    createAt: { type: date, default: Date.now }
+    createAt: { type: Date, default: Date.now }
 });
 
-Account.statics findByEmail = function (email) {
+Account.statics.findByEmail = function (email) {
     return this.findOne({ email }).exec();
 }
+
 Account.statics.localRegister = function ({ username, email, password }) {
     const account = new this({
         profile: {
@@ -58,4 +59,4 @@ Account.methods.generateToken = function () {
 }
 
 
-module.exports = mongoose.model('Account', Account);
+module.exports = mongoose.models.Account || mongoose.model('Account', Account);

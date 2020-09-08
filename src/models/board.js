@@ -1,21 +1,30 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-//작성자
-const Writer = new Schema({
-    name: String,
-    email: String
-});
 
 
 //게시글
 const Board = new Schema({
     title: String,
     contents: String,
-    writer: { Writer },
+    writer: String,
     createAt: {
         type: Date,
         default: Date.now
     },
-    delete_chk: String
+    delete_chk: {
+        type: String,
+        defalut: "F"
+    }
 });
+
+Board.statics.boardRegister = function ({ title, writer, contents }) {
+    const board = new this({
+        title,
+        writer,
+        contents
+    });
+    return board.save();
+};
+
+module.exports = mongoose.model('Board', Board);

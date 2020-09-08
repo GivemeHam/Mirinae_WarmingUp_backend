@@ -1,4 +1,4 @@
-const Joi = require('joi');
+const Joi = require('Joi');
 const Account = require('models/Account');
 const { schema } = require('../../models/account');
 

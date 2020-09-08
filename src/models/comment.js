@@ -10,5 +10,11 @@ const Comment = new Schema({
         type: Date,
         default: Date.now
     },
-    delete_chk: String
+    delete_chk: {
+        type: String,
+        defalut: "F"
+    }
 });
+
+
+module.exports = mongoose.model('Comment', Comment);
