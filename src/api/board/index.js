@@ -4,5 +4,9 @@ const boardCtrl = require('./board.controller');
 
 //글 작성
 board.post('/register', boardCtrl.createBoard);
+board.get('/boardList', boardCtrl.findAllBoard);
+board.get('/boardView/:id', boardCtrl.findBoardById);
+board.delete('/boardDelete/:id', boardCtrl.deleteBoardById);
+board.patch('/boardUpdate/:id', boardCtrl.updateBoardById);
 
 module.exports = board;

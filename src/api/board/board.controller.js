@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const Board = require('models/board');
-const { Types: { objectId } } = require('mongoose');
+const { Types: { ObjectId } } = require('mongoose');
 
 
 //게시글 작성
@@ -40,6 +40,8 @@ exports.findAllBoard = async (ctx) => {
 
 //해당 글 불러오기
 exports.findBoardById = async (ctx) => {
+    const { id } = ctx.params;
+
     let board;
 
     try {
@@ -56,6 +58,41 @@ exports.findBoardById = async (ctx) => {
         ctx.status = 404;
         ctx.body = { message: 'board not found' };
         return;
+    }
+    ctx.body = board;
+}
+
+exports.deleteBoardById = async (ctx) => {
+    const { id } = ctx.params;
+
+    try {
+        await Board.findByIdAndRemove(id).exec();
+    } catch (e) {
+        if (e.name === 'CastError') {
+            ctx.status = 400;
+            return;
+        }
+    }
+    ctx.body = 'delete success';
+    ctx.status = 204;   // no content
+};
+
+exports.updateBoardById = async (ctx) => {
+    const { id } = ctx.params;
+
+    if (!ObjectId.isValid(id)) {
+        ctx.status = 400;
+        return;
+    }
+
+    let board;
+
+    try {
+        board = await Board.findByIdAndUpdate(id, ctx.request.body, {
+            new: true
+        });
+    } catch (e) {
+        return ctx.throw(500, e);
     }
     ctx.body = board;
 }
