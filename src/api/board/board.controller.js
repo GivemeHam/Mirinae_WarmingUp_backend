@@ -2,10 +2,10 @@ const Joi = require('joi');
 const Board = require('models/board');
 const { Types: { ObjectId } } = require('mongoose');
 
-
 //게시글 작성
 exports.createBoard = async (ctx) => {
-    console.log("createBoard");
+
+
     const {
         title,
         writer,
@@ -15,7 +15,8 @@ exports.createBoard = async (ctx) => {
     const board = new Board({
         title,
         writer,
-        contents
+        contents,
+        //  date
     });
     try {
         await board.save();
@@ -31,7 +32,26 @@ exports.findAllBoard = async (ctx) => {
 
     try {
         boards = await Board.find()
+            .bodysort({ _id: -1 })
             .exec();
+    } catch (e) {
+        return ctx.throw(500, e);
+    }
+    ctx.body = boards;
+}
+//무한스크롤
+exports.findBoardForInfiniteScroll = async (ctx) => {
+    console.log("tset");
+    const { skip_value, limit_value } = ctx.params;
+    console.log(skip_value + " //// " + limit_value);
+    let boards;
+
+    try {
+        boards = await Board.find()
+            .sort({ _id: -1 })
+            .skip(Number(skip_value))       //몇번쨰부터
+            .limit(Number(limit_value))     //몇개
+            .exec()
     } catch (e) {
         return ctx.throw(500, e);
     }
