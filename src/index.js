@@ -12,6 +12,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('koa-bodyparser');
 const { jwtMiddleware } = require('lib/token');
 
+
 mongoose.Promise = global.Promise;
 
 //DB 연결
@@ -26,6 +27,7 @@ mongoose.connect(process.env.MONGO_URI, {
 });
 
 const port = process.env.PORT || 4000;
+
 
 app.use(bodyParser());
 //app.use(jwtMiddleware);

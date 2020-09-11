@@ -13,13 +13,19 @@
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.13.0",
     "koa-bodyparser": "^4.3.0",
+    "koa-render": "^0.2.1",
     "koa-router": "^9.4.0",
+    "koa2-swagger-ui": "^5.0.1",
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.31",
-    "mongoose": "^5.10.3"
+    "mongoose": "^5.10.3",
+    "swagger-jsdoc": "^4.0.0",
+    "swagger-koa": "^2.1.0",
+    "swagger-ui-express": "^4.1.4"
   },
   "scripts": {
     "start": "cross-env NODE_PATH=src node src",
-    "start:dev": "nodemon --watch src/ src/index.js"
+    "start:dev": "nodemon --watch src/ src/index.js",
+    "swagger": "node --harmony src/swagger/app.js"
   }
 }
